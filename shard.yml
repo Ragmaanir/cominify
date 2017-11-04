@@ -1,0 +1,13 @@
+name: cominify
+version: 0.1.0
+
+authors:
+  - Ragmaanir <ragmaanir@gmail.com>
+
+targets:
+  cominify:
+    main: src/cominify.cr
+
+crystal: 0.23.1
+
+license: MIT
