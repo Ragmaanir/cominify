@@ -3,17 +3,6 @@ require "file_utils"
 
 require "./cominify/*"
 
-# size_threshold = 2000 # bytes
-# input_folder = nil
-# output_folder = nil
-# quality = 50
-# scale = 1024
-# filter_strength = 50
-# lossless = false
-# threads = 6
-# format = "pdf"
-# ram = 2048
-
 options = Cominify::Options.new
 
 OptionParser.parse! do |parser|
@@ -43,16 +32,6 @@ OptionParser.parse! do |parser|
 
   parser.on("-h", "--help", "Show this help") { puts parser }
 end
-
-# convert_options = Cominify::ConvertOptions.new(
-#   scale: scale,
-#   quality: quality,
-#   filter_strength: filter_strength,
-#   lossless: lossless,
-#   threads: threads,
-# )
-
-# Cominify.validate_parameters(input_folder, output_folder)
 
 if !options.valid?
   STDERR.puts "Invalid arguments:"
@@ -86,7 +65,6 @@ module Cominify
     getter threads : Int32
     getter size_threshold : Int32
     getter lossless : Bool
-    # getter! convert_options : Cominify::ConvertOptions
     getter errors : Hash(Symbol, String) = {} of Symbol => String
 
     def initialize
@@ -99,26 +77,6 @@ module Cominify
       @lossless = false
       @threads = 6
     end
-
-    # def input_folder=(i)
-    #   if i == nil || i.blank?
-    #     errors[:input_folder] = "Input folder required"
-    #   elsif !File.exists?(i)
-    #     errors[:input_folder] = "Input folder does not exist"
-    #   else
-    #     @input_folder = i
-    #   end
-    # end
-
-    # def output_folder=(o)
-    #   if o == nil || o.blank?
-    #     errors[:output_folder] = "Output folder required"
-    #   elsif !File.exists?(o)
-    #     errors[:output_folder] = "Output folder does not exist"
-    #   else
-    #     @output_folder = o
-    #   end
-    # end
 
     option(:filter_strength, to_i32?)
     option(:quality, to_i32?)
@@ -168,10 +126,6 @@ module Cominify
     def to_s(io : IO)
       errors.each do |k, e|
         io.puts("- %s : %s" % [k, e])
-        # io.print "- "
-        # io.print k
-        # io.prin " "
-        # io.puts e
       end
     end
 
@@ -225,15 +179,6 @@ module Cominify
     o = %{"#{output_folder}"}
 
     format = shell("file \"#{full_file_path}\"").downcase
-
-    # cmd = case format.downcase
-    #       when /tar archive/ then %{tar -xvf #{f} #{o}}
-    #       when /7-zip archive/ then %{7z x #{f} -o#{o}}
-    #       when /zip archive/ then %{unzip #{f} #{o}}
-    #       when /rar archive/ then %{unrar e #{f} #{o}}
-    #       when /pdf document/ then %{pdfimages #{f} #{o}/image}
-    #       else raise "unknown format #{format}"
-    #       end
 
     cmd = case format
           when /tar archive/   then %{tar -xvf #{f} #{o}}

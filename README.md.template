@@ -1,4 +1,4 @@
-# cominify 0.1.0
+# cominify <%= Cominify::VERSION %>
 
 Minify comics in CBR, CBT, CBA, CB7, PDF format by converting images to WEBP.
 
