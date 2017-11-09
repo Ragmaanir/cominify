@@ -1,6 +1,7 @@
 # cominify 0.1.0
 
 Minify comics in CBR, CBT, CBA, CB7, PDF format by converting images to WEBP.
+Only a few comic viewers can display WEBP files. I use [pynocchio](https://github.com/pynocchio/pynocchio). Cominify uses `/dev/shm` for temporary files.
 
 ## Installation
 
